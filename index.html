@@ -3,33 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Love Letter | 2026</title>
+    <title>Our Memory Lane | 2026</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,700&family=Montserrat:wght@200;400&family=Dancing+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,700&family=Montserrat:wght@200;300&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
-            --accent-rose: #d4a373; /* Sophisticated Gold/Rose */
-            --glass: rgba(255, 255, 255, 0.4);
-            --text-dark: #4a4a4a;
+            --paper: #fcfaf7;
+            --dusty-rose: #b5838d;
+            --text: #4a423e;
+            --glass: rgba(255, 255, 255, 0.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: var(--bg-gradient);
+            background: #d6ccc2; /* Base neutral color */
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.05) 100%),
+                url('https://www.transparenttextures.com/patterns/pinstriped-suit.png'); /* Subtle Paper Texture */
             font-family: 'Montserrat', sans-serif;
-            color: var(--text-dark);
+            color: var(--text);
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
-        /* Luxury Glass Container */
+        /* The "Realistic" Film Grain Overlay */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Grain.png');
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
         .container {
-            max-width: 500px;
+            max-width: 450px;
             margin: 0 auto;
-            padding: 20px;
+            position: relative;
         }
 
         section {
@@ -38,188 +51,201 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
             padding: 40px 20px;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s ease-out;
+            perspective: 1000px;
         }
 
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
+        /* Aesthetic Card Look */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            width: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.8s ease;
         }
 
         /* Typography */
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            font-style: italic;
-            margin-bottom: 20px;
+            font-size: 2.2rem;
             font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 15px;
         }
 
-        .cursive {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2rem;
-            color: var(--accent-rose);
+        .handwritten {
+            font-family: 'Mrs Saint Delafield', cursive;
+            font-size: 3rem;
+            color: var(--dusty-rose);
+            margin-bottom: -10px;
         }
 
-        /* Image Styling */
-        .aesthetic-img {
+        /* Realistic Image Frames */
+        .photo-frame {
+            position: relative;
             width: 100%;
-            height: 450px;
-            object-fit: cover;
-            border-radius: 100px 100px 0 0; /* Arched design */
-            margin: 20px 0;
-            filter: sepia(20%);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            height: 380px;
+            margin: 25px 0;
+            background: white;
+            padding: 12px 12px 50px 12px; /* Polaroid Style */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: rotate(-2deg);
         }
 
-        /* Floating Petals Animation */
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: contrast(90%) sepia(10%);
+        }
+
+        /* Petal Depth of Field Effect */
         .petal {
             position: fixed;
-            top: -10%;
-            background: #ffb7b2;
-            border-radius: 150% 0 150% 0;
-            opacity: 0.3;
             pointer-events: none;
-            z-index: 100;
-            animation: fall linear forwards;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(110vh) rotate(540deg);
-            }
-        }
-
-        /* Interactive Buttons */
-        .btn-aesthetic {
-            background: none;
-            border: 1px solid var(--accent-rose);
-            padding: 12px 35px;
-            font-family: 'Montserrat', sans-serif;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: 0.4s;
-            color: var(--text-dark);
-        }
-
-        .btn-aesthetic:hover {
-            background: var(--accent-rose);
-            color: white;
-        }
-
-        /* Audio Control */
-        #music-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
             z-index: 1000;
-            font-size: 12px;
-            letter-spacing: 1px;
-            cursor: pointer;
-            border-bottom: 1px solid var(--accent-rose);
+            background: #ffc2d1;
+            border-radius: 150% 0 150% 0;
+            animation: drift linear forwards;
         }
 
+        @keyframes drift {
+            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: translateY(110vh) translateX(100px) rotate(720deg); opacity: 0; }
+        }
+
+        /* Elegant Buttons */
+        .btn-luxe {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--text);
+            padding: 10px 0;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            margin-top: 30px;
+            color: var(--text);
+            transition: 0.3s;
+        }
+
+        .btn-luxe:hover {
+            color: var(--dusty-rose);
+            border-color: var(--dusty-rose);
+            letter-spacing: 5px;
+        }
+
+        #bg-music-toggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            z-index: 10000;
+            opacity: 0.6;
+        }
     </style>
 </head>
 <body>
 
-    <div id="music-btn" onclick="toggleMusic()">[ PLAY SOUND ]</div>
-    <audio id="player" loop>
-        <source src="https://www.chosic.com/wp-content/uploads/2021/04/Rainy-Day.mp3" type="audio/mp3">
+    <div id="bg-music-toggle" onclick="togglePlay()">[ MUTE / UNMUTE ]</div>
+    <audio id="audio" loop>
+        <source src="https://www.chosic.com/wp-content/uploads/2021/05/Warm-Light.mp3" type="audio/mp3">
     </audio>
 
     <div class="container">
         
-        <section id="s1" class="visible">
-            <p class="cursive">February 14, 2026</p>
-            <h1>To the one <br> who has my heart.</h1>
-            <img src="https://images.unsplash.com/photo-1516589174184-c685266e430c?w=600" class="aesthetic-img" alt="Cover">
-            <button class="btn-aesthetic" onclick="scrollToId('s2')">Begin Story</button>
+        <section id="s1">
+            <div class="glass-card">
+                <p class="handwritten">To my favorite person</p>
+                <h1>Moments captured <br> in time.</h1>
+                <div class="photo-frame">
+                    <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600" alt="Valentine">
+                </div>
+                <button class="btn-luxe" onclick="document.getElementById('s2').scrollIntoView()">Turn Page</button>
+            </div>
         </section>
 
         <section id="s2">
-            <h1>The little things.</h1>
-            <p style="font-weight: 200; line-height: 2;">
-                I love the way you laugh at things that aren't even funny. 
-                The way you drink your coffee, and the way you make the world 
-                feel quiet when everything else is loud.
-            </p>
-            <img src="https://images.unsplash.com/photo-1522673607200-1648832cee98?w=600" style="height:300px; width:80%; border-radius:50% 50% 0 0; object-fit:cover; margin-top:30px;">
-            <button class="btn-aesthetic" onclick="scrollToId('s3')">Keep Going</button>
+            <div class="glass-card" style="transform: rotate(1deg);">
+                <h1>A small note...</h1>
+                <p style="font-weight: 200; font-size: 0.9rem; line-height: 1.8; letter-spacing: 1px;">
+                    In a world that never stops moving, thank you for being the person I can always come back to. 
+                    You are my favorite chapter in this book.
+                </p>
+                <div class="photo-frame" style="height: 250px; transform: rotate(3deg);">
+                    <img src="https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?w=600" alt="Memory">
+                </div>
+                <button class="btn-luxe" onclick="document.getElementById('s3').scrollIntoView()">One last thing</button>
+            </div>
         </section>
 
         <section id="s3">
-            <h1 class="cursive" style="font-size: 3.5rem;">Be mine?</h1>
-            <p>Would you do me the honor of being my Valentine?</p>
-            
-            <div style="margin-top: 40px;">
-                <button class="btn-aesthetic" onclick="sayYes()" style="background:var(--accent-rose); color:white;">Yes, Always</button>
-                <button id="no-btn" class="btn-aesthetic" onmouseover="runAway()">Maybe</button>
+            <div class="glass-card">
+                <h1 class="handwritten" style="font-size: 4rem;">Be mine?</h1>
+                <p style="font-size: 0.8rem; letter-spacing: 2px;">VALENTINE 2026</p>
+                
+                <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 30px;">
+                    <button class="btn-luxe" onclick="success()">Yes, I'd love to</button>
+                    <button id="no-btn" class="btn-luxe" style="border:none;" onmouseover="moveNo()">Maybe next year</button>
+                </div>
             </div>
         </section>
+
     </div>
 
     <script>
-        // Reveal sections on scroll
-        const observerOptions = { threshold: 0.5 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    createPetals();
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('section').forEach(section => observer.observe(section));
-
-        function scrollToId(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function toggleMusic() {
-            const p = document.getElementById('player');
-            const b = document.getElementById('music-btn');
-            if (p.paused) { p.play(); b.innerText = "[ PAUSE ]"; }
-            else { p.pause(); b.innerText = "[ PLAY ]"; }
-        }
-
-        function runAway() {
+        function moveNo() {
             const btn = document.getElementById('no-btn');
-            btn.style.position = 'absolute';
+            btn.style.position = 'fixed';
             btn.style.top = Math.random() * 80 + 'vh';
             btn.style.left = Math.random() * 80 + 'vw';
         }
 
-        function sayYes() {
-            document.body.innerHTML = `
-                <div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; text-align:center;">
-                    <h1 class="cursive" style="font-size:5rem;">It's a date.</h1>
-                    <p>I'll pick you up at 7. ✨</p>
-                </div>
-            `;
-            setInterval(createPetals, 200);
+        function togglePlay() {
+            const a = document.getElementById('audio');
+            return a.paused ? a.play() : a.pause();
         }
 
-        function createPetals() {
-            for(let i=0; i<5; i++) {
-                const petal = document.createElement('div');
-                petal.className = 'petal';
-                petal.style.left = Math.random() * 100 + 'vw';
-                petal.style.width = Math.random() * 15 + 5 + 'px';
-                petal.style.height = petal.style.width;
-                petal.style.animationDuration = Math.random() * 3 + 2 + 's';
-                document.body.appendChild(petal);
-                setTimeout(() => petal.remove(), 5000);
-            }
+        function success() {
+            document.body.innerHTML = `
+                <div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; text-align:center; background:#f4ece8;">
+                    <h1 class="handwritten" style="font-size:6rem;">See you then.</h1>
+                    <p style="letter-spacing:5px;">❤️ ❤️ ❤️</p>
+                </div>
+            `;
+            setInterval(spawnPetal, 100);
         }
+
+        function spawnPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+            
+            // Realistic Variation
+            const size = Math.random() * 15 + 10;
+            const blur = Math.random() * 3; // Depth of field
+            
+            petal.style.width = size + 'px';
+            petal.style.height = size + 'px';
+            petal.style.filter = `blur(${blur}px)`;
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.animationDuration = Math.random() * 3 + 4 + 's';
+            petal.style.opacity = Math.random();
+            
+            document.body.appendChild(petal);
+            setTimeout(() => petal.remove(), 7000);
+        }
+
+        // Auto-spawn a few petals
+        setInterval(spawnPetal, 1500);
     </script>
 </body>
 </html>
